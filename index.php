@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <?php
+    include('includes/header.php');
+    include('functions/functions.php');
+    $aboutModule = new AboutModule();
+    $about = $aboutModule->getAbout(1);
+    $programsModule = new ProgramsModule();
+    $programs = $programsModule->fetchPrograms();
+    $principalModule = new PrincipalModule();
+    $principals = $principalModule->fetchPrincipal();
+    $principal = count($principals) > 0 ? $principals[0] : null;
+    ?>
+    <div class="hero">
+        <div class="parent">
+            <div class="div1 hero-content">
+                <h1>Welcome</h1>
+                <p class="lead">This is Baguio City National High School Website</p>
+            </div>
+        </div>
+    </div>
+    <div class="about">
+        <h2 class="section-header">About The School</h2>
+        <div class="about-grid" style="margin-top: 20px;">
+            <div class="about-col">
+                <div class="about-card">
+                    <h2>History</h2>
+                    <div class="about-content" style="height: 300px; overflow-y: hidden;">
+                        <?php
+                        echo $about['history'];
+                        ?>
+                    </div>
+                    <a href="about/" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+            <div class="about-col">
+                <div class="about-card">
+                    <h2>Hymn</h2>
+                    <div class="about-content" style="height: 300px; overflow-y: hidden;">
+                        <?php
+                        echo $about['hymm'];
+                        ?>
+                    </div>
+                    <a href="about/" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlights / Cards section: Latest News, Achievement, Article -->
+    <section class="cards-section">
+        <div class="container">
+            <h2 class="section-header">Highlights</h2>
+            <div class="cards-grid">
+                <?php
+                // Fetch latest article
+                $articlesModule = new ArticlesModule();
+                $latestArticle = array_slice($articlesModule->fetchArticles(), 0, 1)[0] ?? null;
+
+                // Fetch latest event
+                $eventsModule = new EventsModule();
+                $latestEvent = array_slice($eventsModule->fetchEvents(), 0, 1)[0] ?? null;
+
+                // Fetch latest achievement
+                $achievementsModule = new AchievementsModule();
+                $latestAchievement = array_slice($achievementsModule->fetchAchievements(), 0, 1)[0] ?? null;
+                ?>
+                <!-- Latest Event Card -->
+                <div class="card">
+                    <div class="img-holder">
+                        <?php if ($latestEvent && !empty($latestEvent['imgPath'])): ?>
+                            <img src="uploads/events/<?php echo htmlspecialchars($latestEvent['imgPath']); ?>"
+                                alt="<?php echo htmlspecialchars($latestEvent['title']); ?>"
+                                style="width: 100%; height: 200px; object-fit: cover;">
+                        <?php else: ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="3" y="4" width="18" height="14" rx="2" ry="2"></rect>
+                                <path d="M3 10h18"></path>
+                            </svg>
+                        <?php endif; ?>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Latest Event</h5>
+                        <?php if ($latestEvent): ?>
+                            <p class="card-text">
+                                <?php echo htmlspecialchars(substr($latestEvent['overview'], 0, 100)); ?>...</p>
+                            <a href="events/#event-0" class="btn btn-primary">Show More</a>
+                        <?php else: ?>
+                            <p class="card-text">No events available at this time. Check back soon!</p>
+                            <a href="events/" class="btn btn-primary">View All Events</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Latest Achievement Card -->
+                <div class="card">
+                    <div class="img-holder">
+                        <?php if ($latestAchievement && !empty($latestAchievement['imgPath'])): ?>
+                            <img src="uploads/achievements/<?php echo htmlspecialchars($latestAchievement['imgPath']); ?>"
+                                alt="<?php echo htmlspecialchars($latestAchievement['title']); ?>"
+                                style="width: 100%; height: 200px; object-fit: cover;">
+                        <?php else: ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                        <?php endif; ?>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Latest Achievement</h5>
+                        <?php if ($latestAchievement): ?>
+                            <p class="card-text">
+                                <?php echo htmlspecialchars(substr($latestAchievement['overview'], 0, 100)); ?>...</p>
+                            <a href="achievements/#achievement-0" class="btn btn-primary">Show More</a>
+                        <?php else: ?>
+                            <p class="card-text">No achievements available at this time. Check back soon!</p>
+                            <a href="achievements/" class="btn btn-primary">View All Achievements</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Latest Article Card -->
+                <div class="card">
+                    <div class="img-holder">
+                        <?php if ($latestArticle && !empty($latestArticle['imgPath'])): ?>
+                            <img src="uploads/articles/<?php echo htmlspecialchars($latestArticle['imgPath']); ?>"
+                                alt="<?php echo htmlspecialchars($latestArticle['title']); ?>"
+                                style="width: 100%; height: 200px; object-fit: cover;">
+                        <?php else: ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        <?php endif; ?>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Latest Article</h5>
+                        <?php if ($latestArticle): ?>
+                            <p class="card-text">
+                                <?php echo htmlspecialchars(substr($latestArticle['overview'], 0, 100)); ?>...</p>
+                            <a href="articles/#article-0" class="btn btn-primary">Show More</a>
+                        <?php else: ?>
+                            <p class="card-text">No articles available at this time. Check back soon!</p>
+                            <a href="articles/" class="btn btn-primary">View All Articles</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Curricula & Programs section -->
+    <section class="curricula-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Curricula & Programs</h2>
+                <a class="section-link" href="curricula_programs/">View All Curricula and Programs</a>
+            </div>
+            <div class="curricula-grid">
+                <?php foreach (array_slice($programs, 0, 3) as $index => $program) { ?>
+                    <div class="card curricula-card">
+                        <div class="img-holder">
+                            <img src="uploads/programs/<?php echo $program['imgPath'] ?>"
+                                alt="<?php echo $program['title'] ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $program['title'] ?></h5>
+                            <p class="card-text"><?php echo $program['overview'] ?></p>
+                            <a href="curricula_programs/#program-<?php echo $index; ?>" class="btn btn-outline-primary">View
+                                More</a>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+
+    </section>
+    <!-- Principal section -->
+    <section class="principal-section">
+        <div class="container">
+            <h2 class="section-header">Meet Our Principal</h2>
+            <?php if ($principal): ?>
+            <div class="principal-card">
+                <div class="principal-image">
+                    <?php if (!empty($principal['imgPath']) && file_exists('uploads/principal/' . $principal['imgPath'])): ?>
+                        <img src="uploads/principal/<?php echo htmlspecialchars($principal['imgPath']); ?>" 
+                             alt="<?php echo htmlspecialchars($principal['name']); ?>" 
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    <?php else: ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    <?php endif; ?>
+                </div>
+                <div class="principal-info">
+                    <h3><?php echo htmlspecialchars($principal['name']); ?></h3>
+                    <p class="principal-title">Principal</p>
+                    <div class="principal-bio">
+                        <?php echo !empty($principal['introduction']) ? html_entity_decode(htmlspecialchars_decode($principal['introduction'])) : '<span style="color: var(--color-muted);">No introduction available</span>'; ?>
+                    </div>
+                </div>
+            </div>
+            <?php else: ?>
+            <div style="background: var(--color-surface); border-radius: 12px; padding: 3rem; text-align: center;">
+                <p style="color: var(--color-muted); font-size: 1.1rem;">Principal information not available at this time.</p>
+            </div>
+            <?php endif; ?>
+        </div>
+    </section>
+    <!-- Contact section -->
+    <section class="contact-section">
+        <div class="contact-wrapper">
+            <div class="contact-left">
+                <h2>Contact Us</h2>
+                <p>Have a question, feedback, or need more information? Reach out to us and we'll respond as soon as
+                    possible.</p>
+                <div class="contact-info">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 5h18v14H3z"></path>
+                        </svg>
+                        <span>123 Baguio St., Baguio City</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path
+                                d="M22 16.92V21a1 1 0 0 1-1.09 1 19.53 19.53 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.53 19.53 0 0 1 2 3.1 1 1 0 0 1 3 2h4.08a1 1 0 0 1 1 .76 12.1 12.1 0 0 0 .7 2.8 1 1 0 0 1-.24 1.03L7.46 9.56c1.3 2.8 3.98 5.48 6.76 6.76l1.97-1.97a1 1 0 0 1 1.03-.24 12.1 12.1 0 0 0 2.8.7 1 1 0 0 1 .76 1V21z">
+                            </path>
+                        </svg>
+                        <span>+63 912 345 6789</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M4 4h16v12H4z"></path>
+                            <path d="M22 6l-10 7L2 6"></path>
+                        </svg>
+                        <span>info@bcnsh.edu.ph</span>
+                    </div>
+                </div>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor">
+                            <path d="M18 2h-3a4 4 0 0 0-4 4v3H8v3h3v7h3v-7h3l1-3h-4V6a1 1 0 0 1 1-1h2z"></path>
+                        </svg></a>
+                    <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43 1s-3 1.47-5 2.08C14.5 2 9.6 4.5 7 8 4.1 13 9 18 15 18c3 .0 5-.9 7-2.62 1.1-0.9 1.7-2.4 1.5-4z">
+                            </path>
+                        </svg></a>
+                    <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M17 11.5A5.5 5.5 0 1 1 11.5 6 5.51 5.51 0 0 1 17 11.5z"></path>
+                            <path d="M18.5 6.5h.01"></path>
+                        </svg></a>
+                    <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor">
+                            <path
+                                d="M22 8s-.2-1.4-.8-2c-.7-.8-1.5-.9-3.2-1-1.9-.2-7.9-.2-7.9-.2S4.6 5 3 5.2C1.6 5.4 1 6.2.8 7.2.3 8.8 0 12 0 12s0 3.2.8 4.8c.2 1 0 1.8 2.2 2 1.5.1 5.3.2 5.3.2s6 .0 7.9 0c1.7 0 2.5-.1 3.2-1 .6-.6.8-2 .8-2s.3-1.7.3-3.4S22 8 22 8z">
+                            </path>
+                            <polygon points="9.75 15.02 15.5 11.99 9.75 8.96 9.75 15.02"></polygon>
+                        </svg></a>
+                </div>
+            </div>
+            <div class="contact-right">
+                <form class="contact-form" action="#" method="post">
+                    <label for="name">Your name</label>
+                    <input type="text" id="name" name="name" placeholder="Your Name">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Write your message here..."></textarea>
+                    <button class="btn btn-primary" type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <?php
+    $path = 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
+    include('includes/footer.php') ?>
+</body>
+
+</html>
