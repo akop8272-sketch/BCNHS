@@ -62,7 +62,7 @@ if(!$principal) {
                     <div>
                         <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--color-text); margin-bottom: 1rem;">Principal Image</h3>
                         <?php if(!empty($principal['imgPath']) && file_exists('../uploads/principal/' . $principal['imgPath'])): ?>
-                            <img src="../uploads/principal/<?php echo htmlspecialchars($principal['imgPath']); ?>" alt="<?php echo htmlspecialchars($principal['name']); ?>" style="width: 100%; border-radius: 8px; object-fit: cover; aspect-ratio: 1;">
+                            <img src="../uploads/principal/<?php echo htmlspecialchars($principal['imgPath']); ?>" alt="<?php echo htmlspecialchars($principal['name']); ?>" style="width: 100%; border-radius: 8px; object-fit: contain; aspect-ratio: 1;">
                         <?php else: ?>
                             <div style="background: linear-gradient(135deg, #e9edf7 0%, #f5f7fb 100%); border-radius: 8px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.45);">
                                 <span>No image uploaded</span>

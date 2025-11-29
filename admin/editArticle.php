@@ -34,10 +34,10 @@ if (isset($_POST['update'])) {
     $date = $_POST['date'];
     $author = $_POST['author'];
 
-    $imgPath = $article['imgPath'];
+    $imgPath = $article['imgPath']; // Start with current image
 
-    // Handle file upload if new file is provided
-    if ($_FILES["image"]["name"] != "") {
+    // Handle file upload only if new file is provided
+    if (!empty($_FILES["image"]["name"])) {
         $filename = $_FILES["image"]["name"];
         $targetDir = "../uploads/articles/";
         $targetFile = $targetDir . basename($filename);
@@ -53,7 +53,7 @@ if (isset($_POST['update'])) {
             exit();
         } else {
             if (move_uploaded_file($file, $targetFile)) {
-                $imgPath = $filename;
+                $imgPath = $filename; // Only update if upload successful
             } else {
                 echo "
                 <script>
@@ -128,22 +128,27 @@ if (isset($_POST['update'])) {
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Article Title</label>
                             <input type="text" name="title" placeholder="Enter Article Title" value="<?php echo htmlspecialchars($article['title']) ?>" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The main headline of your article. Make it clear and engaging.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Overview</label>
                             <textarea name="overview" placeholder="Enter Article Overview" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 80px;"><?php echo htmlspecialchars($article['overview']) ?></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">A brief summary (1-2 sentences) that previews the article content.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Content</label>
                             <textarea name="content" id="article-editor" placeholder="Enter Article Content" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 200px;"><?php echo htmlspecialchars($article['content']) ?></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The full article content. You can format text, add links, and insert images here.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Date</label>
                             <input type="datetime-local" name="date" value="<?php echo $article['date'] ?>" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">When the article was published or should be published.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Author</label>
                             <input type="text" name="author" placeholder="Enter Author Name" value="<?php echo htmlspecialchars($article['author']) ?>" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The name of the person who wrote the article.</p>
                         </div>
                         <div style="margin-bottom: 1.5rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Article Image (Optional)</label>

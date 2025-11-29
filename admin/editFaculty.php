@@ -15,29 +15,28 @@ if (isset($_POST['submit'])) {
     $faculty_id = $_POST['faculty'];
     $name = $_POST['name'];
     $position = $_POST['position'];
+    $filename = $staff['imgPath']; // Keep existing photo by default
 
-    // Handle file upload
-    $filename = $_FILES["photo"]["name"];
-    $targetDir = "../uploads/faculty/";
-    $targetFile = $targetDir . basename($filename);
-    $extension = pathinfo($filename, PATHINFO_EXTENSION);
-    $file = $_FILES['photo']['tmp_name'];
-    if (!in_array($extension, ['mp4', 'png', 'jpg', 'jpeg'])) {
-        echo "
-        <script>
-            alert('Invalid file type. Only MP4, PNG, JPG, and JPEG are allowed.');
-            window.location.href = 'faculties_staff.php';
-        </script>
-        ";
-        exit();
-    } else {
-        if (move_uploaded_file($file, $targetFile)) {
-            $facultyStaffModule->updateFacultyStaff($id, $faculty_id, $name, $position, $filename);
+    // Handle file upload only if a file was provided
+    if (!empty($_FILES["photo"]["name"])) {
+        $targetDir = "../uploads/faculty/";
+        $extension = pathinfo($_FILES["photo"]["name"], PATHINFO_EXTENSION);
+        
+        if (!in_array($extension, ['mp4', 'png', 'jpg', 'jpeg'])) {
             echo "
             <script>
-                alert('Faculty/Staff updated successfully.');
+                alert('Invalid file type. Only MP4, PNG, JPG, and JPEG are allowed.');
                 window.location.href = 'faculties_staff.php';
-            </script>";
+            </script>
+            ";
+            exit();
+        }
+        
+        $unique_filename = uniqid() . "." . $extension;
+        $targetFile = $targetDir . $unique_filename;
+        
+        if (move_uploaded_file($_FILES['photo']['tmp_name'], $targetFile)) {
+            $filename = $unique_filename; // Use new filename only if upload successful
         } else {
             echo "
             <script>
@@ -45,8 +44,16 @@ if (isset($_POST['submit'])) {
                 window.location.href = 'faculties_staff.php';
             </script>
             ";
+            exit();
         }
     }
+    
+    $facultyStaffModule->updateFacultyStaff($id, $faculty_id, $name, $position, $filename);
+    echo "
+    <script>
+        alert('Faculty/Staff updated successfully.');
+        window.location.href = 'faculties_staff.php';
+    </script>";
     exit();
 }
 
@@ -107,21 +114,25 @@ if (isset($_POST['submit'])) {
                                         <option value="<?php echo $fac['id'] ?>" <?php echo ($fac['id'] == $staff['faculty_id']) ? 'selected' : ''; ?>><?php echo $fac['name'] ?></option>
                                     <?php } ?>
                                 </select>
+                                <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Which faculty or department does this staff member belong to?</p>
                             </div>
                             
                             <div style="margin-bottom: 1rem;">
                                 <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Staff Name</label>
                                 <input type="text" value="<?php echo $staff['name'] ?>" name="name" placeholder="Enter the Name" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem;">
+                                <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The full name of the faculty or staff member.</p>
                             </div>
                             
                             <div style="margin-bottom: 1rem;">
                                 <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Position</label>
                                 <input type="text" value="<?php echo $staff['position'] ?>" name="position" placeholder="Enter the Position" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem;">
+                                <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Job title or position (e.g., "Principal", "Teacher", "Coordinator").</p>
                             </div>
                             
                             <div style="margin-bottom: 1.5rem;">
-                                <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Photo</label>
-                                <input type="file" name="photo" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem;">
+                                <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Photo (Optional)</label>
+                                <input type="file" name="photo" style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem;">
+                                <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Leave empty to keep current photo. Accepted formats: MP4, PNG, JPG, JPEG</p>
                             </div>
                             
                             <div style="display: flex; gap: 1rem; justify-content: center;">

@@ -18,9 +18,9 @@ if(isset($_POST['submit'])) {
     $id = $_POST['id'];
     $name = $_POST['name'];
     $introduction = $_POST['introduction'];
-    $imgPath = $_POST['imgPath'] ?? $principal['imgPath'];
+    $imgPath = $principal['imgPath']; // Start with current image
 
-    // Handle image upload
+    // Handle image upload only if a new file is provided
     if(!empty($_FILES['image']['name'])) {
         $target_dir = "../uploads/principal/";
         if(!is_dir($target_dir)) {
@@ -33,7 +33,7 @@ if(isset($_POST['submit'])) {
         $target_file = $target_dir . $unique_filename;
         
         if(move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-            $imgPath = $unique_filename;
+            $imgPath = $unique_filename; // Only update if upload successful
         }
     }
 
@@ -112,8 +112,6 @@ if(isset($_POST['submit'])) {
                         <input type="file" id="image" name="image" class="form-control" accept="image/*" style="border-radius: 8px; border: 1px solid var(--color-border); padding: 0.75rem 1rem;">
                         <small style="color: var(--color-muted); display: block; margin-top: 0.5rem;">Accepted formats: JPG, PNG, GIF (Max 5MB)</small>
                     </div>
-
-                    <input type="hidden" name="imgPath" value="<?php echo htmlspecialchars($principal['imgPath']); ?>">
                     
                     <!-- Action Buttons -->
                     <div style="display: flex; gap: 1rem; justify-content: center; border-top: 1px solid var(--color-border); padding-top: 2rem;">

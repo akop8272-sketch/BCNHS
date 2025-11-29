@@ -95,14 +95,17 @@ if (isset($_POST['submit'])) {
                                     <option value="<?php echo $fetches['id'] ?>"><?php echo $fetches['name'] ?></option>
                                 <?php } ?>
                             </select>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Which faculty or department does this staff member belong to?</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Staff Name</label>
                             <input type="text" name="name" placeholder="Enter the Name" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The full name of the faculty or staff member.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Position</label>
                             <input type="text" name="position" placeholder="Enter the Position" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Job title or position (e.g., "Principal", "Teacher", "Coordinator").</p>
                         </div>
                         <div style="margin-bottom: 1.5rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Photo</label>
