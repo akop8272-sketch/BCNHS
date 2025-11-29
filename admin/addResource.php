@@ -91,14 +91,17 @@ if (isset($_POST['submit'])) {
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Resource Title</label>
                             <input type="text" name="title" placeholder="Enter Resource Title" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The name of the learning resource. Make it clear and descriptive.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Overview</label>
                             <textarea name="overview" placeholder="Enter Resource Overview" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 100px;"></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">A brief summary of the resource and its educational value.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Resource Link</label>
                             <input type="url" name="link" placeholder="Enter Resource Link (URL)" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The URL or web link to access the resource online.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Subject</label>
@@ -108,6 +111,7 @@ if (isset($_POST['submit'])) {
                                     <option value="<?php echo $subj['id'] ?>"><?php echo $subj['name'] ?></option>
                                 <?php } ?>
                             </select>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Select the subject area this resource is related to.</p>
                         </div>
                         <div style="margin-bottom: 1.5rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Document File</label>

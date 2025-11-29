@@ -73,16 +73,19 @@ if (isset($_POST['submit'])) {
                                 <div style="margin-bottom: 1rem;">
                                     <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Full Name</label>
                                     <input type="text" name="name" placeholder="Enter full name" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                                    <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The full name of the person creating this user account.</p>
                                 </div>
 
                                 <div style="margin-bottom: 1rem;">
                                     <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Email</label>
                                     <input type="email" name="email" placeholder="Enter email address" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                                    <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">A unique email address for this user. Each user must have a different email.</p>
                                 </div>
 
                                 <div style="margin-bottom: 1rem;">
                                     <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Password</label>
                                     <input type="password" name="password" placeholder="Enter password" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                                    <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Create a secure password. Use a mix of letters, numbers, and symbols if possible.</p>
                                 </div>
 
                                 <div style="margin-bottom: 1.5rem;">
@@ -93,6 +96,7 @@ if (isset($_POST['submit'])) {
                                         <option value="Faculty">Faculty</option>
                                         <option value="User">User</option>
                                     </select>
+                                    <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Admin: Full system access. Faculty: Can manage content in their area. User: Limited access.</p>
                                 </div>
                                 
                                 <div style="display: flex; gap: 1rem; justify-content: center;">

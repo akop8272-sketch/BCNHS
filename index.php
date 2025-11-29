@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="about">
-        <h2 class="section-header">About The School</h2>
+        <h2 class="section-title">About The School</h2>
         <div class="about-grid" style="margin-top: 20px;">
             <div class="about-col">
                 <div class="about-card">
@@ -60,7 +60,7 @@
     <!-- Highlights / Cards section: Latest News, Achievement, Article -->
     <section class="cards-section">
         <div class="container">
-            <h2 class="section-header">Highlights</h2>
+            <h2 class="section-title">Highlights</h2>
             <div class="cards-grid">
                 <?php
                 // Fetch latest article
@@ -187,7 +187,7 @@
     <!-- Principal section -->
     <section class="principal-section">
         <div class="container">
-            <h2 class="section-header">Meet Our Principal</h2>
+            <h2 class="section-title">Meet Our Principal</h2>
             <?php if ($principal): ?>
             <div class="principal-card">
                 <div class="principal-image">
@@ -229,42 +229,22 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M3 5h18v14H3z"></path>
                         </svg>
-                        <span>123 Baguio St., Baguio City</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path
-                                d="M22 16.92V21a1 1 0 0 1-1.09 1 19.53 19.53 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.53 19.53 0 0 1 2 3.1 1 1 0 0 1 3 2h4.08a1 1 0 0 1 1 .76 12.1 12.1 0 0 0 .7 2.8 1 1 0 0 1-.24 1.03L7.46 9.56c1.3 2.8 3.98 5.48 6.76 6.76l1.97-1.97a1 1 0 0 1 1.03-.24 12.1 12.1 0 0 0 2.8.7 1 1 0 0 1 .76 1V21z">
-                            </path>
-                        </svg>
-                        <span>+63 912 345 6789</span>
+                        <span>Governor Pack Road, Baguio City, Philippines, 2600</span>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M4 4h16v12H4z"></path>
                             <path d="M22 6l-10 7L2 6"></path>
                         </svg>
-                        <span>info@bcnsh.edu.ph</span>
+                        <span>305269@deped.gov.ph</span>
                     </div>
                 </div>
                 <div class="social-icons">
-                    <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    <a href="https://www.facebook.com/DepEdTayoBaguioCityNHS" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor">
                             <path d="M18 2h-3a4 4 0 0 0-4 4v3H8v3h3v7h3v-7h3l1-3h-4V6a1 1 0 0 1 1-1h2z"></path>
                         </svg></a>
-                    <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor">
-                            <path
-                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43 1s-3 1.47-5 2.08C14.5 2 9.6 4.5 7 8 4.1 13 9 18 15 18c3 .0 5-.9 7-2.62 1.1-0.9 1.7-2.4 1.5-4z">
-                            </path>
-                        </svg></a>
-                    <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M17 11.5A5.5 5.5 0 1 1 11.5 6 5.51 5.51 0 0 1 17 11.5z"></path>
-                            <path d="M18.5 6.5h.01"></path>
-                        </svg></a>
-                    <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    <a href="https://www.youtube.com/@warrenambat" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor">
                             <path
                                 d="M22 8s-.2-1.4-.8-2c-.7-.8-1.5-.9-3.2-1-1.9-.2-7.9-.2-7.9-.2S4.6 5 3 5.2C1.6 5.4 1 6.2.8 7.2.3 8.8 0 12 0 12s0 3.2.8 4.8c.2 1 0 1.8 2.2 2 1.5.1 5.3.2 5.3.2s6 .0 7.9 0c1.7 0 2.5-.1 3.2-1 .6-.6.8-2 .8-2s.3-1.7.3-3.4S22 8 22 8z">
@@ -272,17 +252,6 @@
                             <polygon points="9.75 15.02 15.5 11.99 9.75 8.96 9.75 15.02"></polygon>
                         </svg></a>
                 </div>
-            </div>
-            <div class="contact-right">
-                <form class="contact-form" action="#" method="post">
-                    <label for="name">Your name</label>
-                    <input type="text" id="name" name="name" placeholder="Your Name">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="you@example.com">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Write your message here..."></textarea>
-                    <button class="btn btn-primary" type="submit">Send Message</button>
-                </form>
             </div>
         </div>
     </section>

@@ -90,18 +90,22 @@ if (isset($_POST['submit'])) {
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Article Title</label>
                             <input type="text" name="title" placeholder="Enter Article Title" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The name of the article. Make it descriptive and clear.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Overview</label>
                             <textarea name="overview" placeholder="Enter Article Overview" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 80px;"></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">A brief summary of what the article is about (1-2 sentences).</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Content</label>
                             <textarea name="content" id="article-editor" placeholder="Enter Article Content" required class="summernote" style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 200px;"></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The full article text with complete information, details, and relevant points.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Author</label>
                             <input type="text" name="author" placeholder="Enter Author Name" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The name of the person who wrote this article.</p>
                         </div>
                         <div style="margin-bottom: 1.5rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Article Image</label>

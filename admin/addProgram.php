@@ -89,14 +89,17 @@ if (isset($_POST['submit'])) {
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Program Title</label>
                             <input type="text" name="title" placeholder="Enter Program Title" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The name of the curriculum program. Make it clear and descriptive.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Overview</label>
                             <textarea name="overview" placeholder="Enter Program Overview" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 100px;"></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">A brief summary of the program's purpose and goals (1-2 sentences).</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Content</label>
                             <textarea name="content" placeholder="Enter Program Content" required class="summernote" style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 150px;"></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Detailed program information including requirements, objectives, and course structure.</p>
                         </div>
                         <div style="margin-bottom: 1.5rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Image</label>

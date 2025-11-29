@@ -5,6 +5,7 @@ requireAdmin();
 include('../functions/functions.php');
 $currentUser = getCurrentUser();
 $facultyStaffModule = new FacultyStaffModule();
+$facultyModule = new FacultyModule();
 $id = $_GET['id'];
 $faculty = $facultyModule->getFaculty($id);
 

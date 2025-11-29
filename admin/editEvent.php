@@ -33,10 +33,10 @@ if (isset($_POST['update'])) {
     $date = $_POST['date'];
     $location = $_POST['location'];
 
-    $imgPath = $event['imgPath'];
+    $imgPath = $event['imgPath']; // Start with current image
 
-    // Handle file upload if new file is provided
-    if ($_FILES["image"]["name"] != "") {
+    // Handle file upload only if new file is provided
+    if (!empty($_FILES["image"]["name"])) {
         $filename = $_FILES["image"]["name"];
         $targetDir = "../uploads/events/";
         $targetFile = $targetDir . basename($filename);
@@ -127,22 +127,27 @@ if (isset($_POST['update'])) {
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Event Title</label>
                             <input type="text" name="title" placeholder="Enter Event Title" value="<?php echo htmlspecialchars($event['title']) ?>" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The name of the event. Make it descriptive and clear.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Overview</label>
                             <textarea name="overview" placeholder="Enter Event Overview" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 80px;"><?php echo htmlspecialchars($event['overview']) ?></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">A brief summary of what the event is about (1-2 sentences).</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Content</label>
                             <textarea name="content" id="event-editor" placeholder="Enter Event Content" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 200px;"><?php echo htmlspecialchars($event['content']) ?></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Full event details including schedule, activities, and important information.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Date</label>
+                            <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Date & Time</label>
                             <input type="datetime-local" name="date" value="<?php echo $event['date'] ?>" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">When the event will take place or when it occurred.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Location</label>
                             <input type="text" name="location" placeholder="Enter Event Location" value="<?php echo htmlspecialchars($event['location']) ?>" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Where the event takes place (venue name, building, or location details).</p>
                         </div>
                         <div style="margin-bottom: 1.5rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Event Image (Optional)</label>

@@ -16,29 +16,28 @@ if (isset($_POST['submit'])) {
     $overview = $_POST['overview'];
     $link = $_POST['link'];
     $subject_id = $_POST['subject'];
+    $filename = $resource['filePath']; // Keep existing document by default
 
-    // Handle file upload
-    $filename = $_FILES["document"]["name"];
-    $targetDir = "../uploads/resources/";
-    $targetFile = $targetDir . basename($filename);
-    $extension = pathinfo($filename, PATHINFO_EXTENSION);
-    $file = $_FILES['document']['tmp_name'];
-    if (!in_array($extension, ['pdf', 'doc', 'docx', 'txt', 'ppt', 'pptx', 'xls', 'xlsx'])) {
-        echo "
-        <script>
-            alert('Invalid file type. Only PDF, DOC, DOCX, TXT, PPT, PPTX, XLS, and XLSX are allowed.');
-            window.location.href = 'learning_resources.php';
-        </script>
-        ";
-        exit();
-    } else {
-        if (move_uploaded_file($file, $targetFile)) {
-            $resourcesModule->updateResource($id, $title, $overview, $link, $filename, $subject_id);
+    // Handle file upload only if a file was provided
+    if (!empty($_FILES["document"]["name"])) {
+        $targetDir = "../uploads/resources/";
+        $extension = pathinfo($_FILES["document"]["name"], PATHINFO_EXTENSION);
+        
+        if (!in_array($extension, ['pdf', 'doc', 'docx', 'txt', 'ppt', 'pptx', 'xls', 'xlsx'])) {
             echo "
             <script>
-                alert('Resource updated successfully.');
+                alert('Invalid file type. Only PDF, DOC, DOCX, TXT, PPT, PPTX, XLS, and XLSX are allowed.');
                 window.location.href = 'learning_resources.php';
-            </script>";
+            </script>
+            ";
+            exit();
+        }
+        
+        $unique_filename = uniqid() . "." . $extension;
+        $targetFile = $targetDir . $unique_filename;
+        
+        if (move_uploaded_file($_FILES['document']['tmp_name'], $targetFile)) {
+            $filename = $unique_filename; // Use new filename only if upload successful
         } else {
             echo "
             <script>
@@ -46,8 +45,16 @@ if (isset($_POST['submit'])) {
                 window.location.href = 'learning_resources.php';
             </script>
             ";
+            exit();
         }
     }
+    
+    $resourcesModule->updateResource($id, $title, $overview, $link, $filename, $subject_id);
+    echo "
+    <script>
+        alert('Resource updated successfully.');
+        window.location.href = 'learning_resources.php';
+    </script>";
     exit();
 }
 
@@ -131,7 +138,7 @@ if (isset($_POST['submit'])) {
                                 
                                 <div style="margin-bottom: 1.5rem;">
                                     <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Document File</label>
-                                    <input type="file" name="document" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                                    <input type="file" name="document" style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
                                     <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Accepted formats: PDF, DOC, DOCX, TXT, PPT, PPTX, XLS, XLSX</p>
                                 </div>
                                 

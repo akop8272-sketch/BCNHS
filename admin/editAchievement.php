@@ -32,10 +32,10 @@ if (isset($_POST['update'])) {
     $overview = $_POST['overview'];
     $content = $_POST['content'];
 
-    $imgPath = $achievement['imgPath'];
+    $imgPath = $achievement['imgPath']; // Start with current image
 
-    // Handle file upload if new file is provided
-    if ($_FILES["image"]["name"] != "") {
+    // Handle file upload only if new file is provided
+    if (!empty($_FILES["image"]["name"])) {
         $filename = $_FILES["image"]["name"];
         $targetDir = "../uploads/achievements/";
         $targetFile = $targetDir . basename($filename);
@@ -126,14 +126,17 @@ if (isset($_POST['update'])) {
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Achievement Title</label>
                             <input type="text" name="title" placeholder="Enter Achievement Title" value="<?php echo htmlspecialchars($achievement['title']) ?>" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">The name or title of the achievement. Examples: "Award Winner", "Recognition", etc.</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Overview</label>
                             <textarea name="overview" placeholder="Enter Achievement Overview" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 80px;"><?php echo htmlspecialchars($achievement['overview']) ?></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">A brief summary of the achievement (1-2 sentences).</p>
                         </div>
                         <div style="margin-bottom: 1rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Content</label>
                             <textarea name="content" id="achievement-editor" placeholder="Enter Achievement Content" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; min-height: 200px;"><?php echo htmlspecialchars($achievement['content']) ?></textarea>
+                            <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Complete details about the achievement. Include context, impact, and recognition.</p>
                         </div>
                         <div style="margin-bottom: 1.5rem;">
                             <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Achievement Image (Optional)</label>
