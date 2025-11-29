@@ -11,7 +11,12 @@ $subjects = $subjectModule->fetchSubject();
 
 if (isset($_POST['addSubject'])) {
     $subjectName = $_POST['subjectName'];
-    $subjectModule->createSubject($subjectName);
+    $subjectId = $subjectModule->createSubject($subjectName);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'created', 'subject', $subjectId, $subjectName);
+    
     echo "
     <script>
         alert('Subject added successfully.');

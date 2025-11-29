@@ -27,7 +27,12 @@ if (isset($_POST['submit'])) {
         exit();
     } else {
         if (move_uploaded_file($file, $targetFile)) {
-            $servicesModule->createService($title, $content, $location, $filename);
+            $serviceId = $servicesModule->createService($title, $content, $location, $filename);
+            
+            // Log activity
+            $activityLog = new ActivityLogModule();
+            $activityLog->logActivity($currentUser['id'], 'created', 'service', $serviceId, $title);
+            
             echo "
             <script>
                 alert('Service added successfully.');

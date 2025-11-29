@@ -194,7 +194,7 @@
                     <?php if (!empty($principal['imgPath']) && file_exists('uploads/principal/' . $principal['imgPath'])): ?>
                         <img src="uploads/principal/<?php echo htmlspecialchars($principal['imgPath']); ?>" 
                              alt="<?php echo htmlspecialchars($principal['name']); ?>" 
-                             style="width: 100%; height: 100%; object-fit: cover;">
+                             style="width: 100%; height: 100%; object-fit: contain;">
                     <?php else: ?>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>

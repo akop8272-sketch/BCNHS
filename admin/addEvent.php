@@ -29,7 +29,12 @@ if (isset($_POST['submit'])) {
         exit();
     } else {
         if (move_uploaded_file($file, $targetFile)) {
-            $eventsModule->createEvent($title, $overview, $content, $date, $location, $filename, $currentUser['id']);
+            $eventId = $eventsModule->createEvent($title, $overview, $content, $date, $location, $filename, $currentUser['id']);
+            
+            // Log activity
+            $activityLog = new ActivityLogModule();
+            $activityLog->logActivity($currentUser['id'], 'created', 'event', $eventId, $title);
+            
             echo "
             <script>
                 alert('Event added successfully.');

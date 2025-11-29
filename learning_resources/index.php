@@ -38,7 +38,8 @@ function getYouTubeThumbnail($url) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning Resources - BCNHS</title>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <!-- Cache-busted stylesheet to ensure latest styles load -->
+    <link href="../css/style.css?v=2" rel="stylesheet">
 </head>
 <body>
     <?php include('../includes/header.php'); ?>
@@ -102,30 +103,10 @@ function getYouTubeThumbnail($url) {
     </main>
 
     <script>
-        // Test: Log all elements on page load
-        window.addEventListener('DOMContentLoaded', function() {
-            console.log('=== Page Loaded ===');
-            const links = document.querySelectorAll('.resources-nav .resource-category-link');
-            const sections = document.querySelectorAll('.resource-section');
-            console.log('Found links:', links.length);
-            console.log('Found sections:', sections.length);
-            
-            links.forEach((link, i) => {
-                console.log(`Link ${i}: href="${link.getAttribute('href')}", class="${link.className}"`);
-            });
-            
-            sections.forEach((section, i) => {
-                console.log(`Section ${i}: id="${section.id}", class="${section.className}"`);
-            });
-        });
-        
         // Navigation link click handler - only for resource category navigation
         document.querySelectorAll('.resources-nav .resource-category-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                console.log('=== Link Clicked ===');
-                console.log('Clicked href:', this.getAttribute('href'));
-                
                 // Remove active class from all category links and resource sections
                 document.querySelectorAll('.resources-nav .resource-category-link').forEach(l => l.classList.remove('active'));
                 document.querySelectorAll('.resource-section').forEach(s => s.classList.remove('active'));
@@ -134,10 +115,9 @@ function getYouTubeThumbnail($url) {
                 this.classList.add('active');
                 const sectionId = this.getAttribute('href');
                 const resourceSection = document.querySelector(sectionId);
-                console.log('Found section:', resourceSection ? 'YES' : 'NO');
                 if(resourceSection) {
                     resourceSection.classList.add('active');
-                    console.log('Section is now active');
+                    resourceSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });

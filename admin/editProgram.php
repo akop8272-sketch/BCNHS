@@ -47,6 +47,11 @@ if (isset($_POST['submit'])) {
     }
     
     $programsModule->updateProgram($id, $title, $overview, $content, $filename);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'program', $id, $title);
+    
     echo "
     <script>
         alert('Program updated successfully.');

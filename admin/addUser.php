@@ -24,6 +24,12 @@ if (isset($_POST['submit'])) {
     }
 
     $usersModule->createUser($name, $email, $password, $role);
+    
+    // Log activity
+    $currentUser = getCurrentUser();
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'created', 'user', null, $name);
+    
     echo "
     <script>
         alert('User created successfully.');

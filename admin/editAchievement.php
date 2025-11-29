@@ -1,10 +1,13 @@
 <?php
 include('../includes/auth.php');
-requireAdmin();
+// Allow both Admin and Faculty to access this page
+requireAdminOrFaculty();
 
 include('../functions/functions.php');
-$currentUser = getCurrentUser();
-$achievementsModule = new AchievementsModule();
+$currentUser         = getCurrentUser();
+$achievementsModule  = new AchievementsModule();
+$isAdmin             = hasRole('Admin');
+$isFaculty           = hasRole('Faculty');
 
 if (!isset($_GET['id'])) {
     echo "
@@ -15,7 +18,7 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-$id = $_GET['id'];
+$id          = $_GET['id'];
 $achievement = $achievementsModule->getAchievement($id);
 
 if (!$achievement) {
@@ -25,6 +28,18 @@ if (!$achievement) {
         window.location.href = 'achievements.php';
     </script>";
     exit();
+}
+
+// If faculty (not admin), ensure they can only edit their own achievement
+if ($isFaculty && !$isAdmin) {
+    if (!isset($achievement['created_by']) || $achievement['created_by'] != $currentUser['id']) {
+        echo "
+        <script>
+            alert('You are not allowed to edit this achievement.');
+            window.location.href = 'achievements.php';
+        </script>";
+        exit();
+    }
 }
 
 if (isset($_POST['update'])) {
@@ -64,7 +79,12 @@ if (isset($_POST['update'])) {
         }
     }
 
-    $achievementsModule->updateAchievement($id, $title, $overview, $content, $imgPath);
+    $achievementsModule->updateAchievement($id, $title, $overview, $content, $imgPath, $achievement['created_by'] ?? null);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'achievement', $id, $title);
+    
     echo "
     <script>
         alert('Achievement updated successfully.');

@@ -1504,13 +1504,12 @@ footer { text-align: center; font-size: 0.92rem; color: var(--color-primary-600)
     margin-bottom: 3rem;
     padding-bottom: 2rem;
     border-bottom: 2px solid var(--color-border);
-    display: none !important;
-    background: red !important;
+    display: none;
 }
 
 .resource-section.active {
-    display: block !important;
-    background: green !important;
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .resource-section:last-child {

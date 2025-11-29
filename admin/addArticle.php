@@ -28,7 +28,12 @@ if (isset($_POST['submit'])) {
         exit();
     } else {
         if (move_uploaded_file($file, $targetFile)) {
-            $articlesModule->createArticle($title, $overview, $content, $author, $filename, $currentUser['id']);
+            $articleId = $articlesModule->createArticle($title, $overview, $content, $author, $filename, $currentUser['id']);
+            
+            // Log activity
+            $activityLog = new ActivityLogModule();
+            $activityLog->logActivity($currentUser['id'], 'created', 'article', $articleId, $title);
+            
             echo "
             <script>
                 alert('Article added successfully.');

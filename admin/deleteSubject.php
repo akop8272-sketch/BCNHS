@@ -3,6 +3,7 @@ include('../includes/auth.php');
 requireAdmin();
 
 include('../functions/functions.php');
+$currentUser = getCurrentUser();
 $subjectModule = new SubjectModule();
 
 if (!isset($_GET['id'])) {
@@ -15,7 +16,15 @@ if (!isset($_GET['id'])) {
 }
 
 $id = $_GET['id'];
-$subjectModule->deleteSubject($id);
+$subject = $subjectModule->getSubject($id);
+
+if ($subject) {
+    // Log activity before deletion
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'deleted', 'subject', $id, $subject['name'] ?? 'Subject');
+    
+    $subjectModule->deleteSubject($id);
+}
 
 echo "
 <script>

@@ -19,46 +19,37 @@ $totalFaculty = count($facultyStaffModule->fetchFacultyStaff());
 $totalPrograms = count($programsModule->fetchPrograms());
 $totalEvents = count($eventsModule->fetchEvents());
 
-// Fetch recent items for activity log
-$recentArticles = $articlesModule->fetchArticles();
-$recentEvents = $eventsModule->fetchEvents();
-$recentAchievements = $achievementsModule->fetchAchievements();
+// Fetch recent activities from activity log
+$activityLogModule = new ActivityLogModule();
+$recentActivities = $activityLogModule->getRecentActivities(5);
 
-// Combine and sort by most recent (limit to 5 activities)
+// Format activities for display
 $activities = [];
-foreach ($recentArticles as $article) {
+foreach ($recentActivities as $activity) {
+    $actionText = '';
+    switch($activity['action']) {
+        case 'created':
+            $actionText = ucfirst($activity['content_type']) . ' created';
+            break;
+        case 'updated':
+            $actionText = ucfirst($activity['content_type']) . ' updated';
+            break;
+        case 'deleted':
+            $actionText = ucfirst($activity['content_type']) . ' deleted';
+            break;
+        default:
+            $actionText = ucfirst($activity['content_type']) . ' ' . $activity['action'];
+    }
+    
     $activities[] = [
-        'type' => 'article',
-        'title' => $article['title'],
-        'description' => 'Article posted',
-        'date' => isset($article['date']) ? $article['date'] : date('Y-m-d H:i:s'),
-        'creator' => isset($article['created_by']) ? $article['created_by'] : 'Unknown'
+        'type' => $activity['content_type'],
+        'title' => $activity['content_title'] ?? 'Untitled',
+        'description' => $actionText,
+        'date' => $activity['created_at'],
+        'user_name' => $activity['user_name'] ?? 'Unknown',
+        'user_role' => $activity['user_role'] ?? 'Unknown'
     ];
 }
-foreach ($recentEvents as $event) {
-    $activities[] = [
-        'type' => 'event',
-        'title' => $event['title'],
-        'description' => 'Event created - ' . $event['date'],
-        'date' => $event['date'],
-        'creator' => isset($event['created_by']) ? $event['created_by'] : 'Unknown'
-    ];
-}
-foreach ($recentAchievements as $achievement) {
-    $activities[] = [
-        'type' => 'achievement',
-        'title' => $achievement['title'],
-        'description' => 'Achievement added',
-        'date' => date('Y-m-d H:i:s'),
-        'creator' => isset($achievement['created_by']) ? $achievement['created_by'] : 'Unknown'
-    ];
-}
-
-// Sort by date descending and limit to 4
-usort($activities, function($a, $b) {
-    return strtotime($b['date']) - strtotime($a['date']);
-});
-$activities = array_slice($activities, 0, 4);
 
 // Helper function to format time ago
 function timeAgo($date) {
@@ -230,7 +221,7 @@ function timeAgo($date) {
                                 </div>
                                 <div class="activity-content">
                                     <p class="activity-title"><?php echo htmlspecialchars($activity['title']); ?></p>
-                                    <p class="activity-description"><?php echo htmlspecialchars($activity['description']); ?></p>
+                                    <p class="activity-description"><?php echo htmlspecialchars($activity['description']); ?> by <strong><?php echo htmlspecialchars($activity['user_name']); ?></strong> (<?php echo htmlspecialchars($activity['user_role']); ?>)</p>
                                     <p class="activity-time"><?php echo timeAgo($activity['date']); ?></p>
                                 </div>
                             </div>
