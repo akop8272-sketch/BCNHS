@@ -102,20 +102,14 @@ function getYouTubeThumbnail($url) {
     </main>
 
     <script>
-        // Test: Log all elements on page load
         window.addEventListener('DOMContentLoaded', function() {
             console.log('=== Page Loaded ===');
-            const links = document.querySelectorAll('.resources-nav .resource-category-link');
-            const sections = document.querySelectorAll('.resource-section');
-            console.log('Found links:', links.length);
-            console.log('Found sections:', sections.length);
-            
-            links.forEach((link, i) => {
-                console.log(`Link ${i}: href="${link.getAttribute('href')}", class="${link.className}"`);
-            });
-            
-            sections.forEach((section, i) => {
-                console.log(`Section ${i}: id="${section.id}", class="${section.className}"`);
+            const allElements = document.querySelectorAll('*');
+            console.log('All elements:', allElements.length);
+            allElements.forEach((el, i) => {
+                const id = el.id ? '#' + el.id : '';
+                const classes = el.className ? '.' + String(el.className).trim().replace(/\s+/g, '.') : '';
+                console.log(`El ${i}: ${el.tagName.toLowerCase()}${id}${classes}`);
             });
         });
         
