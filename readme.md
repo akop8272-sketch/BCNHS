@@ -1,2 +1,5 @@
 Do not delete the admin account in the database
-Truncate/Empty records of the database first to run except the users table
+Do not truncate empty the users table in the database
+Do not empty the about table in the database
+Do not empty the principal table in the database
+
