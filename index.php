@@ -20,6 +20,9 @@
     $principalModule = new PrincipalModule();
     $principals = $principalModule->fetchPrincipal();
     $principal = count($principals) > 0 ? $principals[0] : null;
+    $contactModule = new ContactModule();
+    $contacts = $contactModule->fetchContacts();
+    $contact = count($contacts) > 0 ? $contacts[0] : null;
     ?>
     <div class="hero">
         <div class="parent">
@@ -229,28 +232,40 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M3 5h18v14H3z"></path>
                         </svg>
-                        <span>Governor Pack Road, Baguio City, Philippines, 2600</span>
+                        <span><?php echo $contact ? htmlspecialchars($contact['address']) : 'Contact address not available'; ?></span>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M4 4h16v12H4z"></path>
                             <path d="M22 6l-10 7L2 6"></path>
                         </svg>
-                        <span>305269@deped.gov.ph</span>
+                        <span><?php echo $contact ? htmlspecialchars($contact['email']) : 'Email not available'; ?></span>
                     </div>
+                    <?php if ($contact && !empty($contact['phone'])): ?>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M22 16.92V21a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.63A2 2 0 0 1 4 3h4.09a2 2 0 0 1 2 1.72c.12.81.37 1.59.72 2.32a2 2 0 0 1-.45 2.18L9 10a16 16 0 0 0 5 5l.78-.36a2 2 0 0 1 2.18.45c.73.35 1.51.6 2.32.72A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <span><?php echo htmlspecialchars($contact['phone']); ?></span>
+                    </div>
+                    <?php endif; ?>
                 </div>
                 <div class="social-icons">
-                    <a href="https://www.facebook.com/DepEdTayoBaguioCityNHS" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    <?php if ($contact && !empty($contact['facebook_url'])): ?>
+                    <a href="<?php echo htmlspecialchars($contact['facebook_url']); ?>" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor">
                             <path d="M18 2h-3a4 4 0 0 0-4 4v3H8v3h3v7h3v-7h3l1-3h-4V6a1 1 0 0 1 1-1h2z"></path>
                         </svg></a>
-                    <a href="https://www.youtube.com/@warrenambat" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    <?php endif; ?>
+                    <?php if ($contact && !empty($contact['youtube_url'])): ?>
+                    <a href="<?php echo htmlspecialchars($contact['youtube_url']); ?>" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor">
                             <path
                                 d="M22 8s-.2-1.4-.8-2c-.7-.8-1.5-.9-3.2-1-1.9-.2-7.9-.2-7.9-.2S4.6 5 3 5.2C1.6 5.4 1 6.2.8 7.2.3 8.8 0 12 0 12s0 3.2.8 4.8c.2 1 0 1.8 2.2 2 1.5.1 5.3.2 5.3.2s6 .0 7.9 0c1.7 0 2.5-.1 3.2-1 .6-.6.8-2 .8-2s.3-1.7.3-3.4S22 8 22 8z">
                             </path>
                             <polygon points="9.75 15.02 15.5 11.99 9.75 8.96 9.75 15.02"></polygon>
                         </svg></a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

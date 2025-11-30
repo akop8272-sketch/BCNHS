@@ -270,6 +270,26 @@ INSERT INTO `services` (`id`, `title`, `content`, `location`, `imgPath`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL,
+  `address` text NOT NULL,
+  `email` text NOT NULL,
+  `phone` text DEFAULT NULL,
+  `facebook_url` text DEFAULT NULL,
+  `youtube_url` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`id`, `address`, `email`, `phone`, `facebook_url`, `youtube_url`) VALUES
+(1, 'Governor Pack Road, Baguio City, Philippines, 2600', '305269@deped.gov.ph', NULL, 'https://www.facebook.com/DepEdTayoBaguioCityNHS', 'https://www.youtube.com/@warrenambat');
+
+--
 -- Table structure for table `subject`
 --
 
@@ -389,6 +409,12 @@ ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
@@ -469,6 +495,12 @@ ALTER TABLE `resources`
 --
 ALTER TABLE `services`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `contact`
+--
+ALTER TABLE `contact`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `subject`

@@ -465,6 +465,56 @@ class ServicesModule {
     }
 }
 
+// ===================== CONTACT TABLE =====================
+class ContactModule {
+    private $pdo;
+
+    public function __construct() {
+        $db = new Database();
+        $this->pdo = $db->getPDO();
+    }
+
+    public function fetchContacts() {
+        $fetch = $this->pdo->query("SELECT * FROM contact");
+        return $fetch->fetchAll();
+    }
+
+    public function getContact($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM contact WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch();
+    }
+
+    public function createContact($address, $email, $phone = null, $facebook_url = null, $youtube_url = null) {
+        $stmt = $this->pdo->prepare("INSERT INTO contact (address, email, phone, facebook_url, youtube_url) VALUES (:address, :email, :phone, :facebook_url, :youtube_url)");
+        $stmt->execute([
+            ':address' => $address,
+            ':email' => $email,
+            ':phone' => $phone,
+            ':facebook_url' => $facebook_url,
+            ':youtube_url' => $youtube_url,
+        ]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function updateContact(int $id, $address, $email, $phone = null, $facebook_url = null, $youtube_url = null) {
+        $stmt = $this->pdo->prepare("UPDATE contact SET address = :address, email = :email, phone = :phone, facebook_url = :facebook_url, youtube_url = :youtube_url WHERE id = :id");
+        $stmt->execute([
+            ':address' => $address,
+            ':email' => $email,
+            ':phone' => $phone,
+            ':facebook_url' => $facebook_url,
+            ':youtube_url' => $youtube_url,
+            ':id' => $id,
+        ]);
+    }
+
+    public function deleteContact(int $id) {
+        $stmt = $this->pdo->prepare("DELETE FROM contact WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+    }
+}
+
 // ===================== USERS TABLE =====================
 class UsersModule {
     private $pdo;
