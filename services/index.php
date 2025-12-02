@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services - BCNHS</title>
-    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
-</head>
-<body>
-    <?php 
+<?php 
 include('../functions/functions.php');
 $servicesModule = new ServicesModule();
 $services = $servicesModule->fetchServices();
@@ -22,6 +12,7 @@ $services = $servicesModule->fetchServices();
     <title>Services - BCNHS</title>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
+    
 </head>
 <body>
     <?php include('../includes/header.php'); ?>

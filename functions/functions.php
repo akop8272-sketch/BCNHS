@@ -589,6 +589,51 @@ class PrincipalModule {
     }
 }
 
+// ===================== CONTACT TABLE =====================
+class ContactModule {
+    private $pdo;
+
+    public function __construct() {
+        $db = new Database();
+        $this->pdo = $db->getPDO();
+    }
+
+    public function fetchContact() {
+        $fetch = $this->pdo->query("SELECT * FROM contact");
+        return $fetch->fetchAll();
+    }
+
+    public function getContact($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM contact WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch();
+    }
+
+    public function createContact($address, $email, $facebook_url, $youtube_url, $phone = null) {
+        $stmt = $this->pdo->prepare("INSERT INTO contact (address, email, facebook_url, youtube_url, phone) VALUES (:address, :email, :facebook_url, :youtube_url, :phone)");
+        $stmt->execute([
+            ':address' => $address,
+            ':email' => $email,
+            ':facebook_url' => $facebook_url,
+            ':youtube_url' => $youtube_url,
+            ':phone' => $phone,
+        ]);
+        return $this->pdo->lastInsertId();
+    }
+
+    public function updateContact(int $id, $address, $email, $facebook_url, $youtube_url, $phone = null) {
+        $stmt = $this->pdo->prepare("UPDATE contact SET address = :address, email = :email, facebook_url = :facebook_url, youtube_url = :youtube_url, phone = :phone WHERE id = :id");
+        $stmt->execute([
+            ':address' => $address,
+            ':email' => $email,
+            ':facebook_url' => $facebook_url,
+            ':youtube_url' => $youtube_url,
+            ':phone' => $phone,
+            ':id' => $id,
+        ]);
+    }
+}
+
 // ===================== ACTIVITY LOG TABLE =====================
 class ActivityLogModule {
     private $pdo;

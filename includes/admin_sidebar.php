@@ -84,6 +84,17 @@ $isFaculty = hasRole('Faculty');
             </li>
 
             <li class="admin-nav-item">
+                <a href="contact.php" class="admin-nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92V12a10 10 0 1 0-9.16 9.95"></path>
+                        <path d="M22 16.92A5 5 0 0 1 16.92 22"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span>Manage Contact</span>
+                </a>
+            </li>
+
+            <li class="admin-nav-item">
                 <a href="learning_resources.php" class="admin-nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M22 10v6m0 0l-8.5-5-8.5 5m17 0V8c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2"></path>

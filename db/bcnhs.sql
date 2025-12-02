@@ -388,6 +388,9 @@ ALTER TABLE `resources`
 ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
+-- Indexes for table `contact`
+-- (Primary key defined in CREATE TABLE `contact` section)
+
 --
 -- Indexes for table `subject`
 --
@@ -526,3 +529,27 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `address` text NOT NULL,
+  `email` text NOT NULL,
+  `facebook_url` text DEFAULT NULL,
+  `youtube_url` text DEFAULT NULL,
+  `phone` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`id`, `address`, `email`, `facebook_url`, `youtube_url`, `phone`) VALUES
+(1, 'Governor Pack Road, Baguio City, Philippines, 2600', '305269@deped.gov.ph', 'https://www.facebook.com/DepEdTayoBaguioCityNHS', 'https://www.youtube.com/@warrenambat', NULL);
+-- AUTO_INCREMENT for table `contact`
+-- (Handled inline in CREATE TABLE `contact`)
