@@ -50,6 +50,11 @@ if (isset($_POST['submit'])) {
     }
     
     $resourcesModule->updateResource($id, $title, $overview, $link, $filename, $subject_id);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'resource', $id, $title);
+    
     echo "
     <script>
         alert('Resource updated successfully.');

@@ -13,6 +13,10 @@ if(isset($_POST['submit'])) {
     $hymm = $_POST['hymm'];
 
     if($aboutModule->updateAbout($id, $history, $hymm)) {
+        // Log activity
+        $activityLog = new ActivityLogModule();
+        $activityLog->logActivity($currentUser['id'], 'updated', 'about', $id, 'About Page');
+        
         echo "<script>alert('About page updated successfully.');</script>";
     } else {
         echo "<script>alert('Failed to update about page.');</script>";

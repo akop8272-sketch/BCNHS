@@ -30,6 +30,11 @@ if (!$subject) {
 if (isset($_POST['update'])) {
     $subjectName = $_POST['subjectName'];
     $subjectModule->updateSubject($id, $subjectName);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'subject', $id, $subjectName);
+    
     echo "
     <script>
         alert('Subject updated successfully.');

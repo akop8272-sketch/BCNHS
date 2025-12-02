@@ -9,11 +9,21 @@
 </head>
 <body>
     <?php 
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     include('includes/auth.php');
     include('functions/functions.php');
     
     // Redirect if already logged in
     redirectIfLoggedIn();
+    
+    // Get the base URL (root of the project)
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $script_name = $_SERVER['SCRIPT_NAME'];
+    preg_match('#^(.*?/BCNHS)#', $script_name, $matches);
+    $base_url = $protocol . '://' . $host . ($matches[1] ?? '');
     
     $error = '';
     
@@ -34,11 +44,11 @@
                 
                 // Redirect based on role
                 if ($user['role'] === 'Admin') {
-                    header('Location: /websys/BCNHS/admin/');
+                    header('Location: ' . $base_url . '/admin/');
                 } else if ($user['role'] === 'Faculty') {
-                    header('Location: /websys/BCNHS/admin/faculty-dashboard.php');
+                    header('Location: ' . $base_url . '/admin/faculty-dashboard.php');
                 } else {
-                    header('Location: /websys/BCNHS/');
+                    header('Location: ' . $base_url . '/');
                 }
                 exit();
             } else {

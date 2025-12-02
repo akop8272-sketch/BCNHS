@@ -1,9 +1,13 @@
 <?php
 include('../includes/auth.php');
-requireAdmin();
+// Allow both Admin and Faculty to access this page
+requireAdminOrFaculty();
 
 include('../functions/functions.php');
 $eventsModule = new EventsModule();
+$currentUser  = getCurrentUser();
+$isAdmin      = hasRole('Admin');
+$isFaculty    = hasRole('Faculty');
 
 if (!isset($_GET['id'])) {
     echo "
@@ -14,7 +18,7 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-$id = $_GET['id'];
+$id    = $_GET['id'];
 $event = $eventsModule->getEvent($id);
 
 if (!$event) {
@@ -24,6 +28,18 @@ if (!$event) {
         window.location.href = 'events.php';
     </script>";
     exit();
+}
+
+// If faculty (not admin), ensure they can only edit their own event
+if ($isFaculty && !$isAdmin) {
+    if (!isset($event['created_by']) || $event['created_by'] != $currentUser['id']) {
+        echo "
+        <script>
+            alert('You are not allowed to edit this event.');
+            window.location.href = 'events.php';
+        </script>";
+        exit();
+    }
 }
 
 if (isset($_POST['update'])) {
@@ -65,7 +81,12 @@ if (isset($_POST['update'])) {
         }
     }
 
-    $eventsModule->updateEvent($id, $title, $overview, $content, $date, $location, $imgPath);
+    $eventsModule->updateEvent($id, $title, $overview, $content, $date, $location, $imgPath, $event['created_by'] ?? null);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'event', $id, $title);
+    
     echo "
     <script>
         alert('Event updated successfully.');

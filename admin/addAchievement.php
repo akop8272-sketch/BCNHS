@@ -27,7 +27,12 @@ if (isset($_POST['submit'])) {
         exit();
     } else {
         if (move_uploaded_file($file, $targetFile)) {
-            $achievementsModule->createAchievement($title, $overview, $content, $filename, $currentUser['id']);
+            $achievementId = $achievementsModule->createAchievement($title, $overview, $content, $filename, $currentUser['id']);
+            
+            // Log activity
+            $activityLog = new ActivityLogModule();
+            $activityLog->logActivity($currentUser['id'], 'created', 'achievement', $achievementId, $title);
+            
             echo "
             <script>
                 alert('Achievement added successfully.');

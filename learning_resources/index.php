@@ -38,7 +38,8 @@ function getYouTubeThumbnail($url) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning Resources - BCNHS</title>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <!-- Cache-busted stylesheet to ensure latest styles load -->
+    <link href="../css/style.css?v=2" rel="stylesheet">
 </head>
 <body>
     <?php include('../includes/header.php'); ?>
@@ -102,24 +103,10 @@ function getYouTubeThumbnail($url) {
     </main>
 
     <script>
-        window.addEventListener('DOMContentLoaded', function() {
-            console.log('=== Page Loaded ===');
-            const allElements = document.querySelectorAll('*');
-            console.log('All elements:', allElements.length);
-            allElements.forEach((el, i) => {
-                const id = el.id ? '#' + el.id : '';
-                const classes = el.className ? '.' + String(el.className).trim().replace(/\s+/g, '.') : '';
-                console.log(`El ${i}: ${el.tagName.toLowerCase()}${id}${classes}`);
-            });
-        });
-        
         // Navigation link click handler - only for resource category navigation
         document.querySelectorAll('.resources-nav .resource-category-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                console.log('=== Link Clicked ===');
-                console.log('Clicked href:', this.getAttribute('href'));
-                
                 // Remove active class from all category links and resource sections
                 document.querySelectorAll('.resources-nav .resource-category-link').forEach(l => l.classList.remove('active'));
                 document.querySelectorAll('.resource-section').forEach(s => s.classList.remove('active'));
@@ -128,10 +115,9 @@ function getYouTubeThumbnail($url) {
                 this.classList.add('active');
                 const sectionId = this.getAttribute('href');
                 const resourceSection = document.querySelector(sectionId);
-                console.log('Found section:', resourceSection ? 'YES' : 'NO');
                 if(resourceSection) {
                     resourceSection.classList.add('active');
-                    console.log('Section is now active');
+                    resourceSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });

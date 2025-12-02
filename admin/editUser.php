@@ -22,6 +22,11 @@ if (isset($_POST['submit'])) {
     }
 
     $usersModule->updateUser($id, $name, $email, $password, $role);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'user', $id, $name);
+    
     echo "
     <script>
         alert('User updated successfully.');

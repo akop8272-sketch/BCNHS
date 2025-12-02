@@ -38,6 +38,11 @@ if(isset($_POST['submit'])) {
     }
 
     $principalModule->updatePrincipal($id, $name, $introduction, $imgPath);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'principal', $id, $name);
+    
     echo "<script>alert('Principal information updated successfully.');</script>";
     header("Location: principal.php");
     exit;

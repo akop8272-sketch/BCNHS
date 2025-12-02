@@ -101,6 +101,7 @@ class AchievementsModule {
             ':imgPath' => $imgPath,
             ':created_by' => $created_by,
         ]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateAchievement(int $id, $title, $overview, $content, $imgPath, $created_by = null) {
@@ -151,6 +152,7 @@ class ArticlesModule {
             ':imgPath' => $imgPath,
             ':created_by' => $created_by,
         ]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateArticle(int $id, $title, $overview, $content, $date, $author, $imgPath, $created_by = null) {
@@ -204,6 +206,7 @@ class EventsModule {
             ':imgPath' => $imgPath,
             ':created_by' => $created_by,
         ]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateEvent(int $id, $title, $overview, $content, $date, $location, $imgPath, $created_by = null) {
@@ -251,6 +254,7 @@ class FacultyModule {
         $stmt->execute([
             ':name' => $name,
         ]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateFaculty(int $id, $name) {
@@ -295,6 +299,7 @@ class FacultyStaffModule {
             ':position' => $position,
             ':imgPath' => $imgPath,
         ]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateFacultyStaff(int $id, $faculty_id, $name, $position, $imgPath) {
@@ -342,6 +347,7 @@ class ProgramsModule {
             ':content' => $content,
             ':imgPath' => $imgPath,
         ]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateProgram(int $id, $title, $overview, $content, $imgPath) {
@@ -390,6 +396,7 @@ class ResourcesModule {
             ':path' => $path,
             ':subject_id' => $subject_id,
         ]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateResource(int $id, $title, $overview, $link, $path, $subject_id) {
@@ -438,6 +445,7 @@ class ServicesModule {
             ':location' => $location,
             ':imgPath' => $imgPath,
         ]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateService(int $id, $title, $content, $location, $imgPath) {
@@ -533,6 +541,7 @@ class SubjectModule {
     public function createSubject($name) {
         $stmt = $this->pdo->prepare("INSERT INTO subject (name) VALUES (:name)");
         $stmt->execute([':name' => $name]);
+        return $this->pdo->lastInsertId();
     }
 
     public function updateSubject($id, $name) {
@@ -580,6 +589,38 @@ class PrincipalModule {
     }
 }
 
+// ===================== ACTIVITY LOG TABLE =====================
+class ActivityLogModule {
+    private $pdo;
 
+    public function __construct() {
+        $db = new Database();
+        $this->pdo = $db->getPDO();
+    }
+
+    public function logActivity($user_id, $action, $content_type, $content_id, $content_title) {
+        $stmt = $this->pdo->prepare("INSERT INTO activity_log (user_id, action, content_type, content_id, content_title, created_at) VALUES (:user_id, :action, :content_type, :content_id, :content_title, NOW())");
+        $stmt->execute([
+            ':user_id' => $user_id,
+            ':action' => $action, // 'created', 'updated', 'deleted'
+            ':content_type' => $content_type, // 'article', 'event', 'achievement'
+            ':content_id' => $content_id,
+            ':content_title' => $content_title,
+        ]);
+    }
+
+    public function getRecentActivities($limit = 10) {
+        $stmt = $this->pdo->prepare("
+            SELECT al.*, u.name as user_name, u.role as user_role 
+            FROM activity_log al 
+            LEFT JOIN users u ON al.user_id = u.id 
+            ORDER BY al.created_at DESC 
+            LIMIT :limit
+        ");
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+}
 
 ?>

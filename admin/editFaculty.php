@@ -49,6 +49,11 @@ if (isset($_POST['submit'])) {
     }
     
     $facultyStaffModule->updateFacultyStaff($id, $faculty_id, $name, $position, $filename);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'faculty_staff', $id, $name);
+    
     echo "
     <script>
         alert('Faculty/Staff updated successfully.');

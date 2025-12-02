@@ -27,7 +27,12 @@ if (isset($_POST['submit'])) {
         exit();
     } else {
         if (move_uploaded_file($file, $targetFile)) {
-            $programsModule->createProgram($title, $overview, $content, $filename);
+            $programId = $programsModule->createProgram($title, $overview, $content, $filename);
+            
+            // Log activity
+            $activityLog = new ActivityLogModule();
+            $activityLog->logActivity($currentUser['id'], 'created', 'program', $programId, $title);
+            
             echo "
             <script>
                 alert('Program added successfully.');

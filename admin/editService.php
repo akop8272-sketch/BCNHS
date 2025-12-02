@@ -47,6 +47,11 @@ if (isset($_POST['submit'])) {
     }
     
     $servicesModule->updateService($id, $title, $content, $location, $filename);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'service', $id, $title);
+    
     echo "
     <script>
         alert('Service updated successfully.');

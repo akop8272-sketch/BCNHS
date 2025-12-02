@@ -29,7 +29,12 @@ if (isset($_POST['submit'])) {
         exit();
     } else {
         if (move_uploaded_file($file, $targetFile)) {
-            $facultyModule->createFacultyStaff($faculty, $name, $position, $filename);
+            $staffId = $facultyModule->createFacultyStaff($faculty, $name, $position, $filename);
+            
+            // Log activity
+            $activityLog = new ActivityLogModule();
+            $activityLog->logActivity($currentUser['id'], 'created', 'faculty_staff', $staffId, $name);
+            
             echo "
             <script>
                 alert('Faculty/Staff added successfully.');

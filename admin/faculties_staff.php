@@ -11,7 +11,12 @@ $faculties = $facultyStaffModule->fetchFacultyStaff();
 
 if(isset($_POST['add'])) {
     $facultyName = $_POST['facultyName'];
-    $fname->createFaculty($facultyName);
+    $facultyId = $fname->createFaculty($facultyName);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'created', 'faculty', $facultyId, $facultyName);
+    
     echo "
     <script>
         alert('Faculty added successfully.');

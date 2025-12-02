@@ -7,6 +7,41 @@
     <title>Document</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Card animation styles */
+        .animate-card {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .animate-card.in-view {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .animate-card.out-view {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        
+        /* Hero content animation */
+        .hero-content {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .hero-content.in-view {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .hero-content.out-view {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+    </style>
 </head>
 
 <body>
@@ -21,19 +56,19 @@
     $principals = $principalModule->fetchPrincipal();
     $principal = count($principals) > 0 ? $principals[0] : null;
     ?>
-    <div class="hero">
+    <div class="hero" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
         <div class="parent">
-            <div class="div1 hero-content">
-                <h1>Welcome</h1>
+            <div class="div1 hero-content animate-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; height: 100vh;">
+                <h1 style="font-size: 15vw;">Welcome</h1>
                 <p class="lead">This is Baguio City National High School Website</p>
             </div>
         </div>
     </div>
     <div class="about">
-        <h2 class="section-title">About The School</h2>
+        <h2 class="section-header">About The School</h2>
         <div class="about-grid" style="margin-top: 20px;">
             <div class="about-col">
-                <div class="about-card">
+                <div class="about-card animate-card">
                     <h2>History</h2>
                     <div class="about-content" style="height: 300px; overflow-y: hidden;">
                         <?php
@@ -44,7 +79,7 @@
                 </div>
             </div>
             <div class="about-col">
-                <div class="about-card">
+                <div class="about-card animate-card">
                     <h2>Hymn</h2>
                     <div class="about-content" style="height: 300px; overflow-y: hidden;">
                         <?php
@@ -60,7 +95,7 @@
     <!-- Highlights / Cards section: Latest News, Achievement, Article -->
     <section class="cards-section">
         <div class="container">
-            <h2 class="section-title">Highlights</h2>
+            <h2 class="section-header">Highlights</h2>
             <div class="cards-grid">
                 <?php
                 // Fetch latest article
@@ -76,7 +111,7 @@
                 $latestAchievement = array_slice($achievementsModule->fetchAchievements(), 0, 1)[0] ?? null;
                 ?>
                 <!-- Latest Event Card -->
-                <div class="card">
+                <div class="card animate-card">
                     <div class="img-holder">
                         <?php if ($latestEvent && !empty($latestEvent['imgPath'])): ?>
                             <img src="uploads/events/<?php echo htmlspecialchars($latestEvent['imgPath']); ?>"
@@ -103,7 +138,7 @@
                 </div>
 
                 <!-- Latest Achievement Card -->
-                <div class="card">
+                <div class="card animate-card">
                     <div class="img-holder">
                         <?php if ($latestAchievement && !empty($latestAchievement['imgPath'])): ?>
                             <img src="uploads/achievements/<?php echo htmlspecialchars($latestAchievement['imgPath']); ?>"
@@ -129,7 +164,7 @@
                 </div>
 
                 <!-- Latest Article Card -->
-                <div class="card">
+                <div class="card animate-card">
                     <div class="img-holder">
                         <?php if ($latestArticle && !empty($latestArticle['imgPath'])): ?>
                             <img src="uploads/articles/<?php echo htmlspecialchars($latestArticle['imgPath']); ?>"
@@ -167,7 +202,7 @@
             </div>
             <div class="curricula-grid">
                 <?php foreach (array_slice($programs, 0, 3) as $index => $program) { ?>
-                    <div class="card curricula-card">
+                    <div class="card curricula-card animate-card">
                         <div class="img-holder">
                             <img src="uploads/programs/<?php echo $program['imgPath'] ?>"
                                 alt="<?php echo $program['title'] ?>" style="width: 100%; height: 100%; object-fit: cover;">
@@ -187,9 +222,9 @@
     <!-- Principal section -->
     <section class="principal-section">
         <div class="container">
-            <h2 class="section-title">Meet Our Principal</h2>
+            <h2 class="section-header">Meet Our Principal</h2>
             <?php if ($principal): ?>
-            <div class="principal-card">
+            <div class="principal-card animate-card">
                 <div class="principal-image">
                     <?php if (!empty($principal['imgPath']) && file_exists('uploads/principal/' . $principal['imgPath'])): ?>
                         <img src="uploads/principal/<?php echo htmlspecialchars($principal['imgPath']); ?>" 
@@ -258,6 +293,34 @@
     <?php
     $path = 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
     include('includes/footer.php') ?>
+    
+    <script>
+        // Card animation on scroll using Intersection Observer
+        const cardObserverOptions = {
+            threshold: 0.25, // Trigger when 25% of card is visible
+            rootMargin: '0px'
+        };
+        
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Card is in view - pop in
+                    entry.target.classList.add('in-view');
+                    entry.target.classList.remove('out-view');
+                } else {
+                    // Card is out of view - pop out
+                    entry.target.classList.remove('in-view');
+                    entry.target.classList.add('out-view');
+                }
+            });
+        }, cardObserverOptions);
+        
+        // Observe all animate-card elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateCards = document.querySelectorAll('.animate-card');
+            animateCards.forEach(card => cardObserver.observe(card));
+        });
+    </script>
 </body>
 
 </html>

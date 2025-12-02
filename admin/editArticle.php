@@ -1,10 +1,13 @@
 <?php
 include('../includes/auth.php');
-requireAdmin();
+// Allow both Admin and Faculty to access this page
+requireAdminOrFaculty();
 
 include('../functions/functions.php');
-$currentUser = getCurrentUser();
-$articlesModule = new ArticlesModule();
+$currentUser     = getCurrentUser();
+$articlesModule  = new ArticlesModule();
+$isAdmin         = hasRole('Admin');
+$isFaculty       = hasRole('Faculty');
 
 if (!isset($_GET['id'])) {
     echo "
@@ -15,7 +18,7 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-$id = $_GET['id'];
+$id      = $_GET['id'];
 $article = $articlesModule->getArticle($id);
 
 if (!$article) {
@@ -25,6 +28,18 @@ if (!$article) {
         window.location.href = 'articles.php';
     </script>";
     exit();
+}
+
+// If faculty (not admin), ensure they can only edit their own article
+if ($isFaculty && !$isAdmin) {
+    if (!isset($article['created_by']) || $article['created_by'] != $currentUser['id']) {
+        echo "
+        <script>
+            alert('You are not allowed to edit this article.');
+            window.location.href = 'articles.php';
+        </script>";
+        exit();
+    }
 }
 
 if (isset($_POST['update'])) {
@@ -66,7 +81,12 @@ if (isset($_POST['update'])) {
         }
     }
 
-    $articlesModule->updateArticle($id, $title, $overview, $content, $date, $author, $imgPath);
+    $articlesModule->updateArticle($id, $title, $overview, $content, $date, $author, $imgPath, $article['created_by'] ?? null);
+    
+    // Log activity
+    $activityLog = new ActivityLogModule();
+    $activityLog->logActivity($currentUser['id'], 'updated', 'article', $id, $title);
+    
     echo "
     <script>
         alert('Article updated successfully.');

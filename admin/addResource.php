@@ -30,7 +30,12 @@ if (isset($_POST['submit'])) {
         exit();
     } else {
         if (move_uploaded_file($file, $targetFile)) {
-            $resourcesModule->createResource($title, $overview, $link, $filename, $subject_id);
+            $resourceId = $resourcesModule->createResource($title, $overview, $link, $filename, $subject_id);
+            
+            // Log activity
+            $activityLog = new ActivityLogModule();
+            $activityLog->logActivity($currentUser['id'], 'created', 'resource', $resourceId, $title);
+            
             echo "
             <script>
                 alert('Resource added successfully.');

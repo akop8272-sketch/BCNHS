@@ -74,7 +74,7 @@ a:hover { color: var(--color-primary-600); text-decoration: underline; }
     background-position: center;
     background-repeat: no-repeat;
     /* blur effect */
-    filter: blur(8px) brightness(0.98);
+    /* filter: blur(1px) brightness(0.98); */
     transform: scale(1.06);
     z-index: 0;
 }
@@ -1509,7 +1509,7 @@ footer { text-align: center; font-size: 0.92rem; color: var(--color-primary-600)
 
 .resource-section.active {
     display: block;
-    animation: fadeInDetail 0.3s ease;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .resource-section:last-child {
