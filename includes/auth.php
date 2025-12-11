@@ -38,7 +38,7 @@ function isAdminOrFaculty() {
 // Redirect to login if not logged in
 function requireLogin() {
     if (!isLoggedIn()) {
-        header('Location: /websys/BCNHS/login.php');
+        header('Location: /../BCNHS/login.php');
         exit();
     }
 }
@@ -46,7 +46,7 @@ function requireLogin() {
 // Redirect to login if not admin
 function requireAdmin() {
     if (!hasRole('Admin')) {
-        header('Location: /websys/BCNHS/login.php');
+        header('Location: /../BCNHS/login.php');
         exit();
     }
 }
@@ -54,7 +54,7 @@ function requireAdmin() {
 // Redirect to login if not faculty
 function requireFaculty() {
     if (!hasRole('Faculty')) {
-        header('Location: /websys/BCNHS/login.php');
+        header('Location: /../BCNHS/login.php');
         exit();
     }
 }
@@ -62,7 +62,7 @@ function requireFaculty() {
 // Redirect to login if not admin or faculty
 function requireAdminOrFaculty() {
     if (!isAdminOrFaculty()) {
-        header('Location: /websys/BCNHS/login.php');
+        header('Location: /../BCNHS/login.php');
         exit();
     }
 }
@@ -71,13 +71,13 @@ function requireAdminOrFaculty() {
 function redirectIfLoggedIn() {
     if (isLoggedIn()) {
         if (hasRole('Admin')) {
-            header('Location: /websys/BCNHS/admin/');
+            header('Location: /../BCNHS/admin/');
             exit();
         } else if (hasRole('Faculty')) {
-            header('Location: /websys/BCNHS/admin/faculty-dashboard.php');
+            header('Location: /../BCNHS/admin/faculty-dashboard.php');
             exit();
         } else {
-            header('Location: /websys/BCNHS/');
+            header('Location: /../BCNHS/');
             exit();
         }
     }
@@ -86,7 +86,7 @@ function redirectIfLoggedIn() {
 // Logout function
 function logout() {
     session_destroy();
-    header('Location: /websys/BCNHS/');
+    header('Location: /../BCNHS/');
     exit();
 }
 
