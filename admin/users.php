@@ -59,7 +59,7 @@ $users = $usersModule->fetchUsers();
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($users as $user) { ?>
+                                    <?php foreach($users as $user) { if($user['role'] != "Admin"){ ?>
                                     <tr style="border-bottom: 1px solid var(--color-border); transition: background 0.2s ease;">
                                         <td style="padding: 1rem; color: var(--color-text);"><?php echo $user['id'] ?></td>
                                         <td style="padding: 1rem; color: var(--color-text);"><?php echo $user['name'] ?></td>
@@ -76,7 +76,7 @@ $users = $usersModule->fetchUsers();
                                             <a href="deleteUser.php?id=<?php echo $user['id'] ?>" class="btn btn-sm" style="background: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-size: 0.875rem; display: inline-block;" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
                                         </td>
                                     </tr>
-                                    <?php } ?>
+                                    <?php } }?>
                                 </tbody>
                             </table>
                         </div>

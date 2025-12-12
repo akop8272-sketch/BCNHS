@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
                                     <label style="display: block; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Role</label>
                                     <select name="role" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
                                         <option value="">-- Select Role --</option>
-                                        <option value="Admin">Admin</option>
+                                        
                                         <option value="Faculty">Faculty</option>
                                         <option value="User">User</option>
                                     </select>

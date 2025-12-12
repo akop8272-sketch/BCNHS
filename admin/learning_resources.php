@@ -57,9 +57,7 @@ if (isset($_POST['addSubject'])) {
                 </div>
                 <div class="topbar-right">
                     <a href="addResource.php" class="btn btn-primary">+ Add New Resource</a>
-                    <div class="admin-profile">
-                        <span class="profile-name"><?php echo htmlspecialchars($currentUser['name']); ?></span>
-                    </div>
+                    
                 </div>
             </div>
             <!-- Dashboard Content -->

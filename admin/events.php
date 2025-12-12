@@ -52,9 +52,7 @@ if ($isFaculty && !$isAdmin) {
                 </div>
                 <div class="topbar-right">
                     <a href="addEvent.php" class="btn btn-primary">+ Add New Event</a>
-                    <div class="admin-profile">
-                        <span class="profile-name"><?php echo htmlspecialchars($currentUser['name']); ?></span>
-                    </div>
+                    
                 </div>
             </div>
             <!-- Dashboard Content -->

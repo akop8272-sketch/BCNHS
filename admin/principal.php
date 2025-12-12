@@ -39,9 +39,7 @@ if(!$principal) {
                 <h1 class="page-title">Manage Principal</h1>
             </div>
             <div class="topbar-right">
-                <div class="admin-profile">
-                    <span class="profile-name"><?php echo htmlspecialchars($currentUser['name']); ?></span>
-                </div>
+                
             </div>
         </div>
 

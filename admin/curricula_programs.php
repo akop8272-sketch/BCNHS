@@ -39,9 +39,7 @@ $programs = $programsModule->fetchPrograms();
                 </div>
                 <div class="topbar-right">
                     <a href="addProgram.php" class="btn btn-primary">+ Add New Program</a>
-                    <div class="admin-profile">
-                        <span class="profile-name"><?php echo htmlspecialchars($currentUser['name']); ?></span>
-                    </div>
+                   
                 </div>
             </div>
             <!-- Dashboard Content -->

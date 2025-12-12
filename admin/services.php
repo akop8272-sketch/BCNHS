@@ -39,9 +39,7 @@ $services = $servicesModule->fetchServices();
                 </div>
                 <div class="topbar-right">
                     <a href="addService.php" class="btn btn-primary">+ Add New Service</a>
-                    <div class="admin-profile">
-                        <span class="profile-name"><?php echo htmlspecialchars($currentUser['name']); ?></span>
-                    </div>
+                    
                 </div>
             </div>
             <!-- Dashboard Content -->
